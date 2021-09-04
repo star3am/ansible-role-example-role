@@ -1,0 +1,6 @@
+---
+version_number: "20210703201014"
+windows_enable_ssh: true
+var_bool: false
+var_int: 1
+var_string: "Ansible Role Example Role"
