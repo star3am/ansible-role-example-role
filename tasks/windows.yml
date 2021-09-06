@@ -34,6 +34,6 @@
     content: "{{ hostvars[inventory_hostname] }}"
     dest: C:/soe-{{ version_number }}.json
     mode: "0644"
-  become: true
-  become_method: runas
-  become_user: Administrator
+  #become: true
+  #become_method: runas
+  #become_user: Administrator
