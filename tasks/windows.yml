@@ -7,7 +7,7 @@
 
 - name: OS
   debug:
-    msg: "{{ ansible_distribution }}  on {{ ansible_facts['system_vendor'] }}"
+    msg: "{{ ansible_distribution }} on {{ ansible_facts['system_vendor'] }}"
 
 - set_fact:
     cloud: "google"
