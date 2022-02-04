@@ -11,6 +11,12 @@
   tags:
     - always
 
+- name: VM Name and IP
+  debug:
+    msg: "vm_name: {{ vm_name }} vm_ip: {{ vm_ip }}"
+  tags:
+    - always
+
 - set_fact:
     cloud: "google"
   when:
