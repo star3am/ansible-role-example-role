@@ -1,4 +1,6 @@
 ---
+vm_name: "vm-name"
+vm_ip: "0.0.0.0"
 version_number: "20210703201014"
 windows_enable_ssh: true
 var_bool: false
