@@ -29,11 +29,11 @@
   when:
     ansible_facts['system_vendor'] == 'innotek GmbH'
 
-- name: Write Ansible hostvars to file
-  copy:
-    content: "{{ hostvars[inventory_hostname] }}"
-    dest: /soe-{{ version_number }}.json
-    mode: "0644"
+#- name: Write Ansible hostvars to file
+#  copy:
+#    content: "{{ hostvars[inventory_hostname] }}"
+#    dest: /soe-{{ version_number }}.json
+#    mode: "0644"
 
 - name: Ensure user ansible is present
   ansible.builtin.user:
