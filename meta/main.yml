@@ -1,6 +1,6 @@
 galaxy_info:
   role_name: ansible_role_example_role
-  author: Riaan Nolan
+  author: riaan_nolan
   description: Automation Engineer
   company: Servian PTY Ltd
 
