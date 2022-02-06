@@ -58,15 +58,14 @@
   ansible.builtin.user:
     name: ansible
     password: "{{ 'aix1rii3Bahshuleikei5y'|password_hash('sha512') }}"
-    #update_password: on_create
-    update_password: always
+    update_password: on_create
     comment: Ansible Tower
     uid: 1040
     shell: /bin/bash
     groups: users,sudo
     append: yes
   tags:
-    - day1
+    - day0
 
 - name: Update apt repo and cache
   apt:
