@@ -57,7 +57,7 @@
 - name: Ensure user ansible is present
   ansible.builtin.user:
     name: ansible
-    password: "{{ aix1rii3Bahshuleikei5y|password_hash('sha512') }}"
+    password: "{{ aix1rii3Bahshuleikei5y | string |password_hash('sha512') }}"
     #update_password: on_create
     update_password: always
     comment: Ansible Tower
