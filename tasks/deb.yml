@@ -57,8 +57,8 @@
 - name: Ensure user ansible is present
   ansible.builtin.user:
     name: ansible
-    #password: "{{ 'aix1rii3Bahshuleikei5y'|password_hash('sha512') }}"
-    password: "$6$IBULZeGd6UP6Jkg3$QqdevUQs.VDuMnT8prurhLuz3PErfoUHXg0/culpF4uj8RdZJ7UyuOG9LAz2B16Nao1jFe5X.NIKw0eYBKyXO1"
+    password: "{{ 'aix1rii3Bahshuleikei5y'|password_hash('sha512') }}"
+    #password: "$6$IBULZeGd6UP6Jkg3$QqdevUQs.VDuMnT8prurhLuz3PErfoUHXg0/culpF4uj8RdZJ7UyuOG9LAz2B16Nao1jFe5X.NIKw0eYBKyXO1"
     update_password: on_create
     comment: Ansible Tower
     uid: 1040
