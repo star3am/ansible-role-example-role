@@ -2,15 +2,14 @@
 #
 # Molecule using Vagrant + Virtualbox so we can test playbooks on Linux and Windows
 #
-galaxy_info:
-  role_name: hashicorp_packer
+#galaxy_info:
+#  role_name: ansible_role_example_role
 
 dependency:
   name: galaxy
 
 driver:
   name: vagrant
-  linked_clone: false
   provider:
     name: virtualbox
 
@@ -83,6 +82,36 @@ platforms:
 #    state: up
 #    groups:
 #      - linux
+  - name: ansible-role-example-role-ubuntu-2204
+    box: bento/ubuntu-22.04
+    memory: 1024
+    cpus: 1
+    config_options:
+      ssh.keep_alive: yes
+      ssh.remote_user: "'vagrant'"
+      ssh.password: "'vagrant'"
+    interfaces:
+      - network_name: forwarded_port
+        guest: 22
+        host: 3225
+    provision: true
+    groups:
+      - linux
+  - name: ansible-role-example-role-windows-2019
+    box: jborean93/WindowsServer2019
+    memory: 1024
+    cpus: 1
+    config_options:
+      vm.communicator: "'winrm'"
+      winrm.remote_user: "'vagrant'"
+      winrm.password: "'vagrant'"
+    interfaces:
+      - network_name: forwarded_port
+        guest: 5986
+        host: 59970
+    provision: true
+    groups:
+      - windows
 #  - name: ansible-role-example-role-ubuntu-2004
 #    box: bento/ubuntu-20.04
 #    memory: 512
@@ -94,7 +123,7 @@ platforms:
 #    interfaces:
 #      - network_name: forwarded_port
 #        guest: 22
-#        host: 3225
+#        host: 3226
 #    provision: true
 #    state: up
 #    groups:
@@ -110,7 +139,7 @@ platforms:
 #    interfaces:
 #      - network_name: forwarded_port
 #        guest: 22
-#        host: 3226
+#        host: 3227
 #    provision: true
 #    state: up
 #    groups:
@@ -126,7 +155,7 @@ platforms:
 #    interfaces:
 #      - network_name: forwarded_port
 #        guest: 22
-#        host: 3227
+#        host: 3228
 #    provision: true
 #    state: up
 #    groups:
@@ -142,27 +171,11 @@ platforms:
 #    interfaces:
 #      - network_name: forwarded_port
 #        guest: 22
-#        host: 3228
+#        host: 3229
 #    provision: true
 #    state: up
 #    groups:
 #      - linux
-  - name: ansible-role-example-role-windows-2019
-    box: jborean93/WindowsServer2019
-    memory: 1024
-    cpus: 1
-    config_options:
-      vm.communicator: "'winrm'"
-      winrm.remote_user: "'vagrant'"
-      winrm.password: "'vagrant'"
-    interfaces:
-      - network_name: forwarded_port
-        guest: 5986
-        host: 59967
-    provision: true
-    #state: up
-    groups:
-      - windows
 #  - name: ansible-role-example-role-windows-2016
 #    box: jborean93/WindowsServer2016
 #    memory: 1024
@@ -190,12 +203,18 @@ provisioner:
         ansible_become: false
         ansible_user: vagrant
         ansible_password: vagrant
-        ansible_port: 59967
+        ansible_port: 59970
         ansible_host: 127.0.0.1
         ansible_connection: winrm
         ansible_winrm_scheme: https
         ansible_winrm_server_cert_validation: ignore
-#      ansible-role-example-role-centos-83:
+      ansible-role-example-role-ubuntu-2204:
+       ansible_connection: ssh
+       ansible_port: 3225
+       ansible_user: vagrant
+       ansible_password: vagrant
+       ansible_host: 127.0.0.1
+#       ansible-role-example-role-centos-83:
 #        ansible_connection: ssh
 #        ansible_port: 3221
 #        ansible_user: vagrant

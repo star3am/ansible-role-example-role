@@ -1,7 +1,16 @@
-ansible==2.9.12
-ansible-lint==4.3.1
-vagranttoansible==1.0.2
-molecule==3.0.8
-molecule-vagrant==0.3
-docker==4.3.0
-yamllint==1.24.2
+vagranttoansible
+yamllint
+ansible
+ansible-lint
+wheel
+pywinrm
+requests
+docker
+molecule
+junit_xml
+# latest version has network bug https://github.com/ansible-community/molecule-vagrant/pull/105/files
+molecule-vagrant==0.6.1
+python-vagrant
+pypsrp
+hvac
+molecule-virtup
