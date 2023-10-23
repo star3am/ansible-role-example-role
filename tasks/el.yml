@@ -62,11 +62,11 @@
   args:
     warn: false
 
-- name: "Ensure package manager repositories are configured | Display repo list"
-  debug:
-    msg:
-      - "Alert! Below are the configured repos. Please review and make sure all allign with site policy"
-      - "{{ dnf_configured.stdout_lines }}"
+# - name: "Ensure package manager repositories are configured | Display repo list"
+#   debug:
+#     msg:
+#       - "Alert! Below are the configured repos. Please review and make sure all allign with site policy"
+#       - "{{ dnf_configured.stdout_lines }}"
 
 - name: "Get repo files list "
   command: ls -l /etc/yum.repos.d/
