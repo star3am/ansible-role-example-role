@@ -1,8 +1,7 @@
 galaxy_info:
   role_name: ansible_role_example_role
   author: riaan_nolan
-  description: Automation Engineer
-  company: Servian PTY Ltd
+  description: HashiCorp Ambassador
 
   license: MIT
 
@@ -11,22 +10,24 @@ galaxy_info:
   platforms:
   - name: Centos
     versions:
-    - 7.7
     - 8.4
+    - 7.7
   - name: Debian
     versions:
-    - 9.0
     - 10.0
+    - 9.0
   - name: Ubuntu
     versions:
-    - 18.04
+    - 22.04
     - 20.04
+    - 18.04
   - name: RedHat
     versions:
     - 8.3
     - 7.9
   - name: Windows
     versions:
+    - 2022
     - 2019
     - 2016
     - 2012
