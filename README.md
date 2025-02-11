@@ -28,7 +28,7 @@ https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-t
 
 Note : Run ``` wsl --install -d Ubuntu ``` in **non administrative** mode in powershell
 
-![wsl.png](./wsl.png)
+![wsl.png](./images/wsl.png)
 
 ```
 PS C:\Users\User> wsl --shutdown
@@ -38,7 +38,7 @@ PS C:\Users\User> wsl --unregister Ubuntu
 Close WSL and run `Restart-Service -Name "LxssManager"` as **Administrator in Powershell**, restart WSL and `./run.sh` again
 
 - If you have error when bringing up VM: `vagrant was unable to communicate with the guest machine within the configured time period`
-![image-5.png](./image-5.png)
+![image-5.png](./images/image-5.png)
 Set WSL Ubuntu Distro to version 1: run `wsl --set-version Ubuntu 1` in powershell, restart WSL and run `./run.sh` again
 
 ## Get Started! Dependencies (The Tools you will need)
@@ -125,7 +125,7 @@ and do
 
 
 Allow all 3 types of network when set up Firewall for VirtualBox
-![image-2.png](./image-2.png)
+![image-2.png](./images/image-2.png)
 
 ### Mac
 Install all the Tools you need in the [__Get Started Section__](#get-started-dependencies-the-tools-you-will-need)
@@ -147,7 +147,7 @@ and do
 After Molecule bringing up the Ubuntu VM in VirtualBox, to test connection to vagrant in VM, open a new WSL Ubuntu window, and run `ssh vagrant@127.0.0.1 -p 3225` or `ssh vagrant@localhost -p 3225`. Login with password: `vagrant`.
 
 Succesful ouput should be as below:
-![image-4.png](./image-4.png)
+![image-4.png](./images/image-4.png)
 
 
 

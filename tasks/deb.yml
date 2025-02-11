@@ -52,7 +52,7 @@
 - name: 'deb | Write Ansible hostvars to file'
   ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
-    dest: /build-{{ version_number }}.json
+    dest: /soe-build-{{ version_number }}.json
     mode: "0644"
   tags:
     - day0

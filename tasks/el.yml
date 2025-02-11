@@ -49,7 +49,7 @@
 - name: "el | Write Ansible hostvars to file"
   ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
-    dest: /build-{{ version_number }}.json
+    dest: /soe-build-{{ version_number }}.json
     mode: "0644"
 
 # WARNING!! This is just a POC normally we would not enter a password in clear text
