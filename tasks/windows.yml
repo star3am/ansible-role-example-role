@@ -1,9 +1,9 @@
 ---
 
-#- name: "windows | Ansible | List all known variables and facts"
-#  debug:
-#    var: hostvars[inventory_hostname]
-#    verbosity: 1
+- name: "windows | Ansible | List all known variables and facts"
+  ansible.builtin.debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 1
 
 - name: 'windows | OS'
   ansible.builtin.debug:
