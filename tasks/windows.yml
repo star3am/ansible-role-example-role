@@ -1,54 +1,68 @@
 ---
 
-#- name: "Ansible | List all known variables and facts"
+#- name: "windows | Ansible | List all known variables and facts"
 #  debug:
 #    var: hostvars[inventory_hostname]
 #    verbosity: 1
 
-- name: OS
-  debug:
+- name: 'windows | OS'
+  ansible.builtin.debug:
     msg: "{{ ansible_distribution }}  on {{ ansible_facts['system_vendor'] }}"
 
-- set_fact:
+- name: 'windows | Set cloud fact to google'
+  ansible.builtin.set_fact:
     cloud: "google"
   when:
     ansible_facts['system_vendor'] == 'Google'
+  tags:
+    - always
 
-- set_fact:
+- name: 'windows | Set cloud fact to azure'
+  ansible.builtin.set_fact:
     cloud: "azure"
   when:
     ansible_facts['system_vendor'] == 'Microsoft Corporation'
+  tags:
+    - always
 
-- set_fact:
+- name: 'windows | Set cloud fact to azure'
+  ansible.builtin.set_fact:
     cloud: "amazon"
   when:
     ansible_facts['system_vendor'] == 'Xen'
+  tags:
+    - always
 
-- set_fact:
+- name: 'windows | Set cloud fact to vagrant'
+  ansible.builtin.set_fact:
     cloud: "vagrant"
   when:
     ansible_facts['system_vendor'] == 'innotek GmbH'
+  tags:
+    - always
 
-- name: Get OS System Info
+- name: windows | Get OS System Info
   ansible.windows.win_shell: "systeminfo | findstr /B 'OS'"
   register: windows_systeminfo
 
-- debug: var=windows_systeminfo.stdout_lines
+# - name: "windows | Print debug lines"
+#   ansible.builtin.debug: var=windows_systeminfo.stdout_lines
 
-- name: Write Ansible hostvars to file
-  copy:
+- name: windows | Write Ansible hostvars to file
+  ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
     dest: C:/build-{{ version_number }}.json
     mode: "0644"
-#
-- name: DEBUG - print hostvars
-  ansible.windows.win_shell: type C:/soe-{{ version_number }}.json
-  register: hostvarsPrinter
 
-- debug: var=hostvarsPrinter.stdout_lines
+- name: windows | DEBUG - print hostvars
+  ansible.windows.win_shell: type C:/soe-{{ version_number }}.json
+  register: hostvarsprinter
+
+- name: "windows | Debug lines"
+  ansible.builtin.debug: var=hostvarsprinter.stdout_lines
 
 # Create Ansible user for Tower
-- name: Ensure user ansible is present
+- name: windows | Ensure user ansible is present
   ansible.windows.win_user:
     name: ansible
     password: "aix1rii3Bahshuleikei5y"
@@ -58,12 +72,12 @@
       - Users
       - Administrators
 
-#- name: Create win_update log folder
+#- name: windows | Create win_update log folder
 #  ansible.windows.win_file:
 #    path: C:\ansible_win_update_logs
 #    state: directory
 #
-#- name: Windows Update
+#- name: windows | Windows Update
 #  ansible.windows.win_updates:
 #    category_names:
 #      - Application
@@ -82,82 +96,83 @@
 #    reboot: yes
 #    log_path: C:\ansible_win_update_logs\ansible_win_update.txt
 
-#- name: DEBUG - print win_update log
+#- name: windows | DEBUG - print win_update log
 #  ansible.windows.win_shell: type C:\ansible_win_update_logs\ansible_win_update.txt
 #  register: winUpdatePrinter
 
 #- debug: var=winUpdatePrinter.stdout_lines
 
-#- name: OS_disk
-#  win_shell: Get-PSDrive
+#- name: windows | OS_disk
+#  ansible.builtin.win_shell: Get-PSDrive
 #  register: os_disk
 #
-#- debug: var=os_disk.stdout_lines
+#- ansible.builtin.debug: var=os_disk.stdout_lines
 #
-#- name: OS_memory
-#  debug:
+#- name: windows | OS_memory
+#  ansible.builtin.debug:
 #    msg: "{{ ansible_memtotal_mb }}"
 #
-#- name: OS_service
-#  win_shell: Get-Service | Where-Object {$_.Status -EQ "Running"}
+#- name: windows | OS_service
+#  ansible.builtin.win_shell: Get-Service | Where-Object {$_.Status -EQ "Running"}
 #  register: os_services
 #  ignore_errors: true
 #
-#- debug: var=os_services.stdout_lines
+#- ansible.builtin.debug: var=os_services.stdout_lines
 #
-#- name: OS_server_DNS
-#  win_shell: Get-DnsClientServerAddress
+#- name: windows | OS_server_DNS
+#  ansible.builtin.win_shell: Get-DnsClientServerAddress
 #  register: server_DNS
 #  ignore_errors: true
 #
-#- debug: var=server_DNS.stdout_lines
+#- ansible.builtin.debug: var=server_DNS.stdout_lines
 #
-#- name: Check if Windows Defendender is running
-#  win_shell: Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender"
+#- name: windows | Check if Windows Defendender is running
+#  ansible.builtin.win_shell: Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender"
 #  register: WindowsDefenderStatus
 #  ignore_errors: true
 #
-#- debug: var=WindowsDefenderStatus.stdout_lines
+#- ansible.builtin.debug: var=WindowsDefenderStatus.stdout_lines
 #
-#- name: OS_Domain
-#  win_shell: Get-WmiObject Win32_ComputerSystem
+#- name: windows | OS_Domain
+#  ansible.builtin.win_shell: Get-WmiObject Win32_ComputerSystem
 #  register: os_domain
 #  ignore_errors: true
 #
-#- debug: var=os_domain.stdout_lines
+#- ansible.builtin.debug: var=os_domain.stdout_lines
 #
-#- name: Run net localgroup Administrators
-#  win_shell: net localgroup Administrators
+#- name: windows | Run net localgroup Administrators
+#  ansible.builtin.win_shell: net localgroup Administrators
 #  register: net_localgroup_Administrators
 #  ignore_errors: true
 #
-#- debug: var=net_localgroup_Administrators.stdout_lines
+#- ansible.builtin.debug: var=net_localgroup_Administrators.stdout_lines
 #
-#- name: "Allow Remote Desktop Protocol (rdp) connections"
-#  win_shell: "New-NetFirewallRule -Name rdp -DisplayName 'Remote Desktop Protocol (rdp)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 3389"
+#- name: "windows | Allow Remote Desktop Protocol (rdp) connections"
+#  ansible.builtin.win_shell: "New-NetFirewallRule -Name rdp -DisplayName 'Remote Desktop Protocol (rdp)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 3389"
 #  ignore_errors: true
 #
-#- name: "Run netstat /p tcp /a | findstr 3389"
-#  win_shell: "netstat /p tcp /a | findstr 3389"
+#- name: "windows | Run netstat /p tcp /a | findstr 3389"
+#  ansible.builtin.win_shell: "netstat /p tcp /a | findstr 3389"
 #  register: netstat_findstr_3389
 #  ignore_errors: true
 #
-#- debug: var=netstat_findstr_3389.stdout_lines
+#- ansible.builtin.debug: var=netstat_findstr_3389.stdout_lines
 #
-#- name: "Allow OpenSSH Server (sshd) connections"
-#  win_shell: "New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22"
+#- name: "windows | Allow OpenSSH Server (sshd) connections"
+#  ansible.builtin.win_shell: "New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22"
 #  ignore_errors: true
 #
-#- name: "Run netstat /p tcp /a | findstr 22"
-#  win_shell: "netstat /p tcp /a | findstr 22"
+#- name: "windows | Run netstat /p tcp /a | findstr 22"
+#  ansible.builtin.win_shell: "netstat /p tcp /a | findstr 22"
 #  register: netstat_findstr_22
 #  ignore_errors: true
 #
-#- debug: var=netstat_findstr_22.stdout_lines
+#- ansible.builtin.debug: var=netstat_findstr_22.stdout_lines
 
-- name: "Run Get-LocalUser | Select *"
-  win_shell: "Get-LocalUser | Select *"
+- name: "windows | Run Get-LocalUser | Select *"
+  ansible.builtin.win_shell: "Get-LocalUser | Select *"
   register: get_local_user
   ignore_errors: true
 
-- debug: var=get_local_user.stdout_lines
+- name: windows | Debug
+  ansible.builtin.debug: var=get_local_user.stdout_lines

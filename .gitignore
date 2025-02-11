@@ -3,6 +3,7 @@
 *.retry
 .DS_Store
 .vscode-root
+.ansible/
 test.yml
 tests/local-test.yml
 tests/.vagrant

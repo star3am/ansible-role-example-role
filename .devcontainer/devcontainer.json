@@ -1,0 +1,21 @@
+{
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "ansible-role-example-role",
+  "workspaceFolder": "/app",
+  "postStartCommand": {
+    "set-git-config-safe-directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+    "set-git-config-line-endings": "git config --global core.autocrlf input",
+    "set-git-config-gpg-program": "git config --global --add gpg.program /usr/bin/gpg",
+    "pre-commit-install": "pre-commit install"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "hashicorp.terraform",
+        "nhoizey.gremlins",
+        "hashicorp.hcl"
+      ]
+    }
+  }
+}

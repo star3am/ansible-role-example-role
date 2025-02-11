@@ -6,45 +6,57 @@
 #    verbosity: 1
 
 # set custom facts which we can use later on
-- set_fact:
+- name: 'el | Set cloud fact to google'
+  ansible.builtin.set_fact:
     cloud: "google"
   when:
     ansible_facts['system_vendor'] == 'Google'
+  tags:
+    - always
 
-- set_fact:
+- name: 'el | Set cloud fact to azure'
+  ansible.builtin.set_fact:
     cloud: "azure"
   when:
     ansible_facts['system_vendor'] == 'Microsoft Corporation'
+  tags:
+    - always
 
-- set_fact:
+- name: 'el | Set cloud fact to azure'
+  ansible.builtin.set_fact:
     cloud: "amazon"
   when:
     ansible_facts['system_vendor'] == 'Xen'
+  tags:
+    - always
 
-- set_fact:
+- name: 'el | Set cloud fact to vagrant'
+  ansible.builtin.set_fact:
     cloud: "vagrant"
   when:
     ansible_facts['system_vendor'] == 'innotek GmbH'
+  tags:
+    - always
 
-- name: "Cloud"
-  debug:
+- name: "el | Cloud"
+  ansible.builtin.debug:
     msg: "Cloud: {{ cloud }}"
 
-- name: "OS"
-  debug:
+- name: "el | OS"
+  ansible.builtin.debug:
     msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }} on {{ cloud }}"
 
-- name: "Write Ansible hostvars to file"
-  copy:
+- name: "el | Write Ansible hostvars to file"
+  ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
     dest: /build-{{ version_number }}.json
     mode: "0644"
 
 # WARNING!! This is just a POC normally we would not enter a password in clear text
-- name: Ensure user ansible is present
+- name: el | Ensure user ansible is present
   ansible.builtin.user:
     name: ansible
-    password: "{{ 'aix1rii3Bahshuleikei5y'|password_hash('sha512') }}"
+    password: "{{ 'aix1rii3Bahshuleikei5y' | password_hash('sha512') }}"
     # password: "$6$IBULZeGd6UP6Jkg3$QqdevUQs.VDuMnT8prurhLuz3PErfoUHXg0/culpF4uj8RdZJ7UyuOG9LAz2B16Nao1jFe5X.NIKw0eYBKyXO1"
     update_password: on_create
     comment: Ansible Tower
@@ -58,18 +70,19 @@
 # https://fedoraproject.org/wiki/EPEL#Quickstart
 # we dont have a Redhat Subscription Manager or Satelite Server so we use EPEL
 # we use the URL to the RPM, because dnf and yum cannot find the epel repo
-- name: "Enable EPEL Repository"
-  yum:
+- name: "el | Enable EPEL Repository"
+  ansible.builtin.dnf:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm"
     state: present
     disable_gpg_check: yes
-  ignore_errors: true
+  # ignore_errors: true
+  failed_when: "'FAILED' in command_result.stderr"
 
 # rpm -ql epel-release
 # dnf repository-packages epel list
 # dnf repolist -v
-- name: "Ensure package manager repositories are configured | Get repo list"
-  command: dnf repolist
+- name: "el | Ensure package manager repositories are configured"
+  ansible.builtin.command: dnf repolist
   changed_when: false
   failed_when: false
   register: dnf_configured
@@ -77,24 +90,24 @@
   args:
     warn: false
 
-# - name: "Ensure package manager repositories are configured | Display repo list"
-#   debug:
+# - name: "el | Ensure package manager repositories are configured | Display repo list"
+#   ansible.builtin.debug:
 #     msg:
 #       - "Alert! Below are the configured repos. Please review and make sure all allign with site policy"
 #       - "{{ dnf_configured.stdout_lines }}"
 
-- name: "Get repo files list "
-  command: ls -l /etc/yum.repos.d/
-  register: ls_l_etc_yum_dot_repos_dot_d
+# - name: "el | Get repo files list"
+#   ansible.builtin.command: ls -l /etc/yum.repos.d/
+#   register: ls_l_etc_yum_dot_repos_dot_d
 
-- name: "Ensure package manager repositories are configured | Display repo list"
-  debug:
-    msg:
-      - "Alert! Below are the configured repos. Please review and make sure all allign with site policy"
-      - "{{ ls_l_etc_yum_dot_repos_dot_d.stdout_lines }}"
+# - name: "el | Ensure package manager repositories are configured | Display repo list"
+#   ansible.builtin.debug:
+#     msg:
+#       - "Alert! Below are the configured repos. Please review and make sure all allign with site policy"
+#       - "{{ ls_l_etc_yum_dot_repos_dot_d.stdout_lines }}"
 
-- name: "Install Package dependencies"
-  dnf:
+- name: "el | Install Package dependencies"
+  ansible.builtin.dnf:
     name: "{{ item }}"
     state: present
   with_items:
@@ -102,6 +115,7 @@
     - ipset
     - firewalld
   ignore_errors: true
+  failed_when: "'FAILED' in command_result.stderr"
   when:
     (ansible_facts['system_vendor'] == 'Xen'
     and ansible_facts['distribution'] == "RedHat"
@@ -114,8 +128,8 @@
 # amazon-ebs.redhat-83: fatal: [none]: FAILED! => {"changed": false, "failures": ["No package firewalld available."], "msg": "Failed to install some of the specified packages", "rc": 1, "results": []}
 # FIX RHEL8-CIS SCORED | 1.4.1 | PATCH | Ensure AIDE is installed
 # FIX RHEL8-CIS SCORED | 3.4.1.1 | PATCH | Ensure a Firewall package is installed
-- name: "FIX RHEL8-CIS SCORED | 1.4.1 | PATCH | Ensure X is installed"
-  yum:
+- name: "el | FIX RHEL8-CIS SCORED | 1.4.1 | PATCH | Ensure X is installed"
+  ansible.builtin.dnf:
     name: "{{ item }}"
     state: present
     disable_gpg_check: yes
@@ -126,9 +140,10 @@
     and ansible_facts['distribution'] == "RedHat"
     and ansible_facts['distribution_major_version'] == "8")
   ignore_errors: true
+  failed_when: "'FAILED' in command_result.stderr"
 
-- name: "FIX RHEL7-CIS AUTOMATED | 1.4.1 | PATCH | Ensure X is installed"
-  yum:
+- name: "el | FIX RHEL7-CIS AUTOMATED | 1.4.1 | PATCH | Ensure X is installed"
+  ansible.builtin.dnf:
     name: "{{ item }}"
     state: present
     disable_gpg_check: yes
@@ -139,3 +154,4 @@
     and ansible_facts['distribution'] == "RedHat"
     and ansible_facts['distribution_major_version'] == "7")
   ignore_errors: true
+  failed_when: "'FAILED' in command_result.stderr"
