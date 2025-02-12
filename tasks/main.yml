@@ -36,14 +36,15 @@
 - name: 'Ansible Role Example Role Windows'
   ansible.builtin.include_tasks: windows.yml
   when: >
-    (ansible_facts['distribution_major_version'] == "10"
-    and ansible_facts['distribution'] is match("Microsoft Windows Server 2022.*"))
-    or
-    (ansible_facts['distribution_major_version'] == "10"
-    and ansible_facts['distribution'] is match("Microsoft Windows Server 2019.*"))
-    or
-    (ansible_facts['distribution_major_version'] == "10"
-    and ansible_facts['distribution'] is match("Microsoft Windows Server 2016.*"))
-    or
-    (ansible_facts['distribution_major_version'] == "6"
-    and ansible_facts['distribution'] is match("Microsoft Windows Server 2012.*"))
+    ansible_facts['distribution'] is match("Microsoft.*")
+    # (ansible_facts['distribution_major_version'] == "10"
+    # and ansible_facts['distribution'] is match("Microsoft Windows Server 2022.*"))
+    # or
+    # (ansible_facts['distribution_major_version'] == "10"
+    # and ansible_facts['distribution'] is match("Microsoft Windows Server 2019.*"))
+    # or
+    # (ansible_facts['distribution_major_version'] == "10"
+    # and ansible_facts['distribution'] is match("Microsoft Windows Server 2016.*"))
+    # or
+    # (ansible_facts['distribution_major_version'] == "6"
+    # and ansible_facts['distribution'] is match("Microsoft Windows Server 2012.*"))

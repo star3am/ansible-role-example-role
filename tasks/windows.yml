@@ -7,7 +7,7 @@
 
 - name: 'windows | OS'
   ansible.builtin.debug:
-    msg: "{{ ansible_distribution }}  on {{ ansible_facts['system_vendor'] }}"
+    msg: "{{ ansible_distribution }} on {{ ansible_facts['system_vendor'] }}"
 
 - name: 'windows | Set cloud fact to google'
   ansible.builtin.set_fact:
