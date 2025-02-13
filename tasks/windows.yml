@@ -3,7 +3,7 @@
 - name: "windows | Ansible | List all known variables and facts"
   ansible.builtin.debug:
     var: hostvars[inventory_hostname]
-    verbosity: 1
+    # verbosity: 1
 
 - name: 'windows | OS'
   ansible.builtin.debug:
@@ -25,7 +25,7 @@
   tags:
     - always
 
-- name: 'windows | Set cloud fact to azure'
+- name: 'windows | Set cloud fact to amazon'
   ansible.builtin.set_fact:
     cloud: "amazon"
   when:

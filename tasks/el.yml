@@ -1,9 +1,9 @@
 ---
 # if you want to list all variables for this host, uncomment this
-#- name: "Ansible | List all known variables and facts"
-#  debug:
-#    var: hostvars[inventory_hostname]
-#    verbosity: 1
+- name: "el | List all known variables and facts"
+  ansible.builtin.debug:
+    var: hostvars[inventory_hostname]
+    # verbosity: 1
 
 # set custom facts which we can use later on
 - name: 'el | Set cloud fact to google'
@@ -22,7 +22,7 @@
   tags:
     - always
 
-- name: 'el | Set cloud fact to azure'
+- name: 'el | Set cloud fact to amazon'
   ansible.builtin.set_fact:
     cloud: "amazon"
   when:
