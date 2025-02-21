@@ -1,20 +1,84 @@
 {
+  "name": "ansible-role-example-role",
   "dockerComposeFile": "../docker-compose.yml",
   "service": "ansible-role-example-role",
   "workspaceFolder": "/app",
   "postStartCommand": {
     "set-git-config-safe-directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
     "set-git-config-line-endings": "git config --global core.autocrlf input",
-    "set-git-config-gpg-program": "git config --global --add gpg.program /usr/bin/gpg",
-    "pre-commit-install": "pre-commit install"
+    "set-git-config-gpg-program": "git config --global --add gpg.program /usr/bin/gpg"
   },
   "customizations": {
     "vscode": {
+      "settings": {
+        "terminal.integrated.scrollback": 1000,
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "editor.formatOnSave": true,
+        "evenBetterToml.formatter.allowedBlankLines": 2,
+        "files.exclude": {
+          "*.egg-info": true,
+          ".pytest_cache": true,
+          ".tox": true,
+          "__pycache__": true,
+          "build": true
+        },
+        "git.ignoreLimitWarning": true,
+        "grammarly.config.documentDomain": "academic",
+        "grammarly.files.include": [
+          "**/*.txt",
+          "**/*.md"
+        ],
+        "python.analysis.exclude": [
+          "build"
+        ],
+        "python.terminal.activateEnvironment": true,
+        "python.testing.pytestEnabled": true,
+        "python.testing.unittestEnabled": false,
+        "mypy-type-checker.severity": {
+          "error": "Warning"
+        },
+        "sortLines.filterBlankLines": true,
+        "yaml.completion": true,
+        "yaml.customTags": [
+          "!encrypted/pkcs1-oaep scalar",
+          "!vault scalar"
+        ],
+        "yaml.format.enable": false,
+        "yaml.validate": true,
+        "evenBetterToml.formatter.alignComments": false,
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml"
+        },
+        "[python]": {
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll": "explicit"
+          },
+          "editor.defaultFormatter": "ms-python.black-formatter",
+          "editor.formatOnSave": true
+        }
+      },
       "extensions": [
-        "dbaeumer.vscode-eslint",
-        "hashicorp.terraform",
-        "nhoizey.gremlins",
-        "hashicorp.hcl"
+        "Tyriar.sort-lines",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode",
+        "hbenl.vscode-test-explorer",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.mypy-type-checker",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode.live-server",
+        "redhat.ansible",
+        "redhat.vscode-yaml",
+        "ryanluker.vscode-coverage-gutters",
+        "shardulm94.trailing-spaces",
+        "tamasfe.even-better-toml",
+        "timonwong.shellcheck",
+        "znck.grammarly"
       ]
     }
   }
