@@ -8,59 +8,59 @@
 - name: 'deb | OS'
   ansible.builtin.debug:
     msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }} on {{ ansible_facts['system_vendor'] }}"
-  tags:
-    - always
+  # tags:
+  #   - always
 
 - name: 'deb | VM Name and IP'
   ansible.builtin.debug:
     msg: "vm_name: {{ vm_name }} vm_ip: {{ vm_ip }}"
-  tags:
-    - always
+  # tags:
+  #   - always
 
 - name: 'deb | Set cloud fact to google'
   ansible.builtin.set_fact:
     cloud: "google"
   when:
     ansible_facts['system_vendor'] == 'Google'
-  tags:
-    - always
+  # tags:
+  #   - always
 
 - name: 'deb | Set cloud fact to azure'
   ansible.builtin.set_fact:
     cloud: "azure"
   when:
     ansible_facts['system_vendor'] == 'Microsoft Corporation'
-  tags:
-    - always
+  # tags:
+  #   - always
 
 - name: 'deb | Set cloud fact to amazon'
   ansible.builtin.set_fact:
     cloud: "amazon"
   when:
     ansible_facts['system_vendor'] == 'Xen'
-  tags:
-    - always
+  # tags:
+  #   - always
 
 - name: 'deb | Set cloud fact to vagrant'
   ansible.builtin.set_fact:
     cloud: "vagrant"
   when:
     ansible_facts['system_vendor'] == 'innotek GmbH'
-  tags:
-    - always
+  # tags:
+  #   - always
 
-- name: 'deb | Install network-manager'
-  ansible.builtin.apt:
-    name: network-manager
-    state: present
+# - name: 'deb | Install network-manager'
+#   ansible.builtin.apt:
+#     name: network-manager
+#     state: present
 
 - name: 'deb | Write Ansible hostvars to file'
   ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
     dest: /soe-build-{{ version_number }}.json
     mode: "0644"
-  tags:
-    - day0
+  # tags:
+  #   - day0
 
 # WARNING!! This is just a POC normally we would not enter a password in clear text
 - name: 'deb | Ensure user ansible is present'
@@ -74,20 +74,20 @@
     shell: /bin/bash
     groups: users,sudo
     append: yes
-  tags:
-    - day0
+  # tags:
+  #   - day0
 
 - name: 'deb | Update apt repo and cache'
   ansible.builtin.apt:
     update_cache: yes
     force_apt_get: yes
     cache_valid_time: 3600
-  tags:
-    - day1
+  # tags:
+  #   - day1
 
 - name: 'deb | Upgrade all packages'
   ansible.builtin.apt:
     upgrade: dist
     force_apt_get: yes
-  tags:
-    - day1
+  # tags:
+  #   - day1
