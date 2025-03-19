@@ -49,7 +49,7 @@
   tags:
     - always
 
-- name: 'deb | Install apache httpd (state=present is optional)'
+- name: 'deb | Install network-manager'
   ansible.builtin.apt:
     name: network-manager
     state: present
