@@ -3,7 +3,7 @@
 - name: "deb | List all known variables and facts"
   ansible.builtin.debug:
     var: hostvars[inventory_hostname]
-    # verbosity: 1
+    verbosity: 1
 
 - name: 'deb | OS'
   ansible.builtin.debug:
