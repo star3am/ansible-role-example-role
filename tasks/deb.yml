@@ -49,10 +49,10 @@
   # tags:
   #   - always
 
-# - name: 'deb | Install network-manager'
-#   ansible.builtin.apt:
-#     name: network-manager
-#     state: present
+- name: 'deb | Install systemd-timesyncd'
+  ansible.builtin.apt:
+    name: systemd-timesyncd
+    state: present
 
 - name: 'deb | Create file /etc/default/ufw'
   ansible.builtin.file:
