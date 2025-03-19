@@ -49,6 +49,11 @@
   tags:
     - always
 
+- name: 'deb | Install apache httpd (state=present is optional)'
+  ansible.builtin.apt:
+    name: network-manager
+    state: present
+
 - name: 'deb | Write Ansible hostvars to file'
   ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
