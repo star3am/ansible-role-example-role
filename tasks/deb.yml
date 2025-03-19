@@ -49,6 +49,21 @@
   # tags:
   #   - always
 
+- name: 'deb | Update apt repo and cache'
+  ansible.builtin.apt:
+    update_cache: yes
+    force_apt_get: yes
+    cache_valid_time: 3600
+  # tags:
+  #   - day1
+
+- name: 'deb | Upgrade all packages'
+  ansible.builtin.apt:
+    upgrade: dist
+    force_apt_get: yes
+  # tags:
+  #   - day1
+
 - name: 'deb | Install systemd-timesyncd'
   ansible.builtin.apt:
     name: systemd-timesyncd
@@ -81,18 +96,3 @@
     append: yes
   # tags:
   #   - day0
-
-- name: 'deb | Update apt repo and cache'
-  ansible.builtin.apt:
-    update_cache: yes
-    force_apt_get: yes
-    cache_valid_time: 3600
-  # tags:
-  #   - day1
-
-- name: 'deb | Upgrade all packages'
-  ansible.builtin.apt:
-    upgrade: dist
-    force_apt_get: yes
-  # tags:
-  #   - day1
