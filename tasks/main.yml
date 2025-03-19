@@ -1,5 +1,10 @@
 ---
 
+- name: "Ansible Role Example Role List Ansible facts"
+  ansible.builtin.debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 1
+
 - name: 'Ansible Role Example Role Enterprise Linux'
   ansible.builtin.include_tasks: el.yml
   when: >
