@@ -14,10 +14,10 @@
 
 - name: 'Ansible Role Example Role Ubuntu / Debian'
   ansible.builtin.include_tasks: deb.yml
-  # when: >
-  #   (ansible_facts['distribution'] == "Ubuntu")
-  #   or
-  #   (ansible_facts['distribution'] == "Debian")
+  when: >
+    (ansible_facts['distribution'] == "Ubuntu")
+    or
+    (ansible_facts['distribution'] == "Debian")
 
 - name: 'Ansible Role Example Role Windows'
   ansible.builtin.include_tasks: windows.yml
