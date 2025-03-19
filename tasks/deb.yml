@@ -54,6 +54,11 @@
 #     name: network-manager
 #     state: present
 
+- name: 'deb | Create file /etc/default/ufw'
+  ansible.builtin.file:
+    path: /etc/default/ufw
+    state: touch
+
 - name: 'deb | Write Ansible hostvars to file'
   ansible.builtin.copy:
     content: "{{ hostvars[inventory_hostname] }}"
